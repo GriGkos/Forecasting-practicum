@@ -1,6 +1,6 @@
 # Forecasting and Statistical Modeling Practicum
 
-A series of Jupyter notebooks on regression diagnostics and classical time-series modeling. The work moves from least-squares model construction and statistical significance tests to residual diagnostics, autoregressive and moving-average processes.
+A series of Jupyter notebooks on regression diagnostics and classical time-series modeling. The work moves from least-squares model construction and statistical significance tests to trend/seasonality analysis, residual diagnostics, autoregressive and moving-average processes.
 
 `Python` · `NumPy` · `pandas` · `SciPy` · `statsmodels` · `scikit-learn` · `Matplotlib`
 
@@ -15,6 +15,9 @@ The notebooks include:
 - confidence intervals for coefficients and predictions;
 - Fisher and Student statistical tests;
 - residual diagnostics and model-adequacy checks;
+- trend removal and differencing;
+- stationarity diagnostics with the Augmented Dickey–Fuller test;
+- seasonal-pattern estimation with Fourier terms, time-slot indicators and seasonal differencing;
 - autocorrelation analysis with ACF/PACF;
 - stationarity and invertibility conditions;
 - autoregressive `AR` models;
@@ -41,9 +44,26 @@ The second notebook focuses on statistical inference around a fitted regression 
 
 The third notebook checks whether the regression assumptions are reasonable. The analysis includes residual behavior, tests related to constant expectation/variance and autocorrelation diagnostics using `statsmodels`.
 
-### `4.ipynb` — continuation of the forecasting practicum
+### `4.ipynb` — trend, stationarity and seasonality
 
-This notebook is kept in its original executed form as part of the practicum sequence. It is larger than the other notebooks because it contains extensive output and visualizations.
+The fourth notebook studies two time series from `TimeSeries.xls` and separates deterministic trend from periodic behavior.
+
+For the pressure series it covers:
+
+- visual trend and ACF analysis;
+- least-squares estimation of a linear trend;
+- detrending and first differences;
+- Augmented Dickey–Fuller tests under several deterministic specifications;
+- comparison of the original and differenced series from a stationarity perspective.
+
+For the flow series it identifies a daily seasonal period of **12 observations** at a two-hour sampling interval and compares several ways of removing that periodic component:
+
+- a non-singular Fourier basis for period 12;
+- time-of-day indicator variables;
+- direct per-slot seasonal means;
+- seasonal differencing with lag 12.
+
+The notebook also compares residual ACF and variance across the seasonal-adjustment approaches. The indicator and per-slot-mean formulations are shown as equivalent representations of the same 12-slot seasonal profile.
 
 ### `5.ipynb` — autoregressive models
 
@@ -75,8 +95,18 @@ ls_variants.xls
 
 The notebooks expect these files to be available in the repository root when run locally.
 
+## Running locally
+
+Install the dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then start Jupyter and run the notebooks from the repository root so the relative paths to the `.xls` files remain valid.
+
 ## Why this repository is in the portfolio
 
-This is primarily a statistical-modeling repository rather than an end-to-end production forecasting service. Its value is that it shows the mathematical side behind common modeling tools: **least squares, statistical tests, uncertainty intervals, residual diagnostics, ACF/PACF and AR/MA model assumptions**.
+This is primarily a statistical-modeling repository rather than an end-to-end production forecasting service. Its value is that it shows the mathematical side behind common modeling tools: **least squares, statistical tests, uncertainty intervals, trend and seasonality, residual diagnostics, ACF/PACF and AR/MA model assumptions**.
 
 That foundation is useful when a forecasting or regression problem requires more than calling a library model and comparing a single metric.
